@@ -5,7 +5,7 @@
   "description": "A collaborative reverse-engineered library for Starfield.",
   "homepage": "https://github.com/Starfield-Reverse-Engineering/CommonLibSF",
   "license": "GPL-3.0-or-later",
-  "builtin-baseline": "5a874b05fb981e2643fd0c1c9ad63e19dfe76b27",
+  "builtin-baseline": "e2bb93a35f70851c2bfb60006f1f7659cd1637d1",
   "dependencies": [
     "spdlog"
   ],
