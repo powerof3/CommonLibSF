@@ -371,7 +371,7 @@ namespace RE
 		if (mem)                                                                                     \
 			return mem;                                                                              \
                                                                                                      \
-		SFSE::stl::report_and_fail("out of memory");                                                 \
+		RE::stl::report_and_fail("out of memory");                                                   \
 	}                                                                                                \
                                                                                                      \
 	[[nodiscard]] void* operator new[](std::size_t a_count, std::align_val_t a_alignment)            \
@@ -380,7 +380,7 @@ namespace RE
 		if (mem)                                                                                     \
 			return mem;                                                                              \
                                                                                                      \
-		SFSE::stl::report_and_fail("out of memory");                                                 \
+		RE::stl::report_and_fail("out of memory");                                                   \
 	}                                                                                                \
                                                                                                      \
 	[[nodiscard]] void* operator new(std::size_t, void* a_ptr) { return a_ptr; }                     \
@@ -403,7 +403,7 @@ namespace RE
 		if (mem)                                                          \
 			return mem;                                                   \
                                                                           \
-		SFSE::stl::report_and_fail("out of memory");                      \
+		RE::stl::report_and_fail("out of memory");                        \
 	}                                                                     \
                                                                           \
 	[[nodiscard]] void* operator new[](std::size_t a_count)               \
@@ -412,7 +412,7 @@ namespace RE
 		if (mem)                                                          \
 			return mem;                                                   \
                                                                           \
-		SFSE::stl::report_and_fail("out of memory");                      \
+		RE::stl::report_and_fail("out of memory");                        \
 	}                                                                     \
                                                                           \
 	void operator delete(void* a_ptr) { RE::free(a_ptr); }                \
@@ -429,7 +429,7 @@ namespace RE
 		if (mem)                                                                \
 			return mem;                                                         \
                                                                                 \
-		SFSE::stl::report_and_fail("out of memory");                            \
+		RE::stl::report_and_fail("out of memory");                              \
 	}                                                                           \
                                                                                 \
 	[[nodiscard]] void* operator new[](std::size_t a_count)                     \
@@ -438,7 +438,7 @@ namespace RE
 		if (mem)                                                                \
 			return mem;                                                         \
                                                                                 \
-		SFSE::stl::report_and_fail("out of memory");                            \
+		RE::stl::report_and_fail("out of memory");                              \
 	}                                                                           \
                                                                                 \
 	void operator delete(void* a_ptr) { RE::free(a_ptr, true); }                \

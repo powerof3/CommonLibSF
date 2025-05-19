@@ -1,12 +1,15 @@
+-- set minimum xmake version
 set_xmakever("2.8.2")
 
 -- set project
 set_project("commonlibsf")
 set_arch("x64")
 set_languages("c++23")
-set_optimize("faster")
 set_warnings("allextra")
 set_encodings("utf-8")
+
+-- add repositories
+add_repositories("libxse-xrepo https://github.com/libxse/libxse-xrepo")
 
 -- add rules
 add_rules("mode.debug", "mode.releasedbg")
@@ -17,46 +20,32 @@ includes("xmake-extra.lua")
 -- define options
 option("rex_ini", function()
     set_default(false)
-    set_description("Enable ini config support for REX")
-    add_defines("REX_OPTION_INI=1")
+    set_description("enable REX::INI settings support")
 end)
 
 option("rex_json", function()
     set_default(false)
-    set_description("Enable json config support for REX")
-    add_defines("REX_OPTION_JSON=1")
+    set_description("enable REX::JSON settings support")
 end)
 
 option("rex_toml", function()
     set_default(false)
-    set_description("Enable toml config support for REX")
-    add_defines("REX_OPTION_TOML=1")
+    set_description("enable REX::TOML settings support")
 end)
 
 option("sfse_xbyak", function()
     set_default(false)
-    set_description("Enable trampoline support for Xbyak")
+    set_description("enable xbyak support for trampoline")
     add_defines("SFSE_SUPPORT_XBYAK=1")
 end)
 
 -- require packages
-add_requires("spdlog", { configs = { header_only = false, std_format = true } })
-
-if has_config("rex_ini") then
-    add_requires("simpleini")
-end
-
-if has_config("rex_json") then
-    add_requires("nlohmann_json")
-end
-
-if has_config("rex_toml") then
-    add_requires("toml11")
-end
-
-if has_config("sfse_xbyak") then
-    add_requires("xbyak")
-end
+add_requires("commonlib-shared 2c5ddece35e5e4acaea9df45c6e2c35dfefb9575", { configs = {
+    rex_ini = has_config("rex_ini"),
+    rex_json = has_config("rex_json"),
+    rex_toml = has_config("rex_toml"),
+    xse_xbyak = has_config("sfse_xbyak")
+} })
 
 -- define targets
 target("commonlibsf")
@@ -67,29 +56,10 @@ target("commonlibsf")
     set_default(os.scriptdir() == os.projectdir())
 
     -- add packages
-    add_packages("spdlog", { public = true })
-
-    if has_config("rex_ini") then
-        add_packages("simpleini", { public = true })
-    end
-
-    if has_config("rex_json") then
-        add_packages("nlohmann_json", { public = true })
-    end
-
-    if has_config("rex_toml") then
-        add_packages("toml11", { public = true })
-    end
-
-    if has_config("sfse_xbyak") then
-        add_packages("xbyak", { public = true })
-    end
+    add_packages("commonlib-shared", { public = true })
 
     -- add options
     add_options("rex_ini", "rex_json", "rex_toml", "sfse_xbyak", { public = true })
-
-    -- add system links
-    add_syslinks("advapi32", "bcrypt", "dbghelp", "dxgi", "ole32", "shell32", "user32", "version", "ws2_32")
 
     -- add source files
     add_files("src/**.cpp")
@@ -98,8 +68,6 @@ target("commonlibsf")
     add_includedirs("include", { public = true })
     add_headerfiles(
         "include/(RE/**.h)",
-        "include/(REL/**.h)",
-        "include/(REX/**.h)",
         "include/(SFSE/**.h)"
     )
 
@@ -156,27 +124,4 @@ target("commonlibsf")
         "cl::/wd5105", -- macro expansion producing 'defined' has undefined behavior (workaround for older msvc bug)
         "cl::/wd5204", -- 'type-name': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
         "cl::/wd5220"  -- 'member': a non-static data member with a volatile qualified type no longer implies that compiler generated copy / move constructors and copy / move assignment operators are not trivial
-    )
-
-    -- add flags (clang-cl)
-    add_cxxflags(
-        "clang_cl::-fms-compatibility",
-        "clang_cl::-fms-extensions",
-        { public = true }
-    )
-
-    -- add flags (clang-cl: disable warnings)
-    add_cxxflags(
-        "clang_cl::-Wno-delete-non-abstract-non-virtual-dtor",
-        "clang_cl::-Wno-deprecated-volatile",
-        "clang_cl::-Wno-ignored-qualifiers",
-        "clang_cl::-Wno-inconsistent-missing-override",
-        "clang_cl::-Wno-invalid-offsetof",
-        "clang_cl::-Wno-microsoft-include",
-        "clang_cl::-Wno-overloaded-virtual",
-        "clang_cl::-Wno-pragma-system-header-outside-header",
-        "clang_cl::-Wno-reinterpret-base-class",
-        "clang_cl::-Wno-switch",
-        "clang_cl::-Wno-unused-private-field",
-        { public = true }
     )

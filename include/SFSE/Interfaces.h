@@ -1,7 +1,5 @@
 #pragma once
 
-#include "SFSE/Impl/Stubs.h"
-
 namespace RE
 {
 	class IMenu;
@@ -9,20 +7,111 @@ namespace RE
 
 namespace SFSE
 {
-	struct PluginInfo;
+	using PluginHandle = std::uint32_t;
+
+	struct PluginInfo
+	{
+		enum Version : std::uint32_t
+		{
+			kVersion = 1
+		};
+
+		std::uint32_t infoVersion;
+		const char*   name;
+		std::uint32_t version;
+	};
+
+	namespace Impl
+	{
+		struct SFSEInterface
+		{
+			std::uint32_t sfseVersion;
+			std::uint32_t runtimeVersion;
+			std::uint32_t interfaceVersion;
+			void* (*QueryInterface)(std::uint32_t);
+			PluginHandle (*GetPluginHandle)();
+			const void* (*GetPluginInfo)(const char*);
+		};
+
+		struct SFSEMessagingInterface
+		{
+			std::uint32_t interfaceVersion;
+			bool (*RegisterListener)(PluginHandle, const char*, void*);
+			bool (*Dispatch)(PluginHandle, std::uint32_t, void*, std::uint32_t, const char*);
+		};
+
+		struct SFSETrampolineInterface
+		{
+			std::uint32_t interfaceVersion;
+			void* (*AllocateFromBranchPool)(PluginHandle, std::size_t);
+			void* (*AllocateFromLocalPool)(PluginHandle, std::size_t);
+		};
+
+		struct SFSEMenuInterface
+		{
+			std::uint32_t interfaceVersion;
+			void (*Register)(void*);
+		};
+
+		struct SFSETaskInterface
+		{
+			std::uint32_t interfaceVersion;
+			void (*AddTask)(void*);
+			void (*AddPermanentTask)(void*);
+		};
+	}
 
 	class QueryInterface
 	{
-	public:
-		[[nodiscard]] REL::Version RuntimeVersion() const;
-
-		[[nodiscard]] std::uint32_t SFSEVersion() const;
-
 	protected:
-		[[nodiscard]] const detail::SFSEInterface* GetProxy() const;
+		[[nodiscard]] decltype(auto) GetProxy() const noexcept
+		{
+			return reinterpret_cast<const Impl::SFSEInterface&>(*this);
+		}
+
+	private:
+		[[nodiscard]] constexpr static REL::Version MakeVersion(std::uint32_t a_version) noexcept
+		{
+			return {
+				static_cast<std::uint16_t>((a_version >> 8 * 3) & 0x0FF),
+				static_cast<std::uint16_t>((a_version >> 8 * 2) & 0x0FF),
+				static_cast<std::uint16_t>((a_version >> 8 / 2) & 0xFFF),
+				static_cast<std::uint16_t>((a_version >> 8 * 0) & 0x00F)
+			};
+		}
+
+	public:
+		[[nodiscard]] std::uint32_t SFSEVersion() const noexcept { return GetProxy().sfseVersion; }
+		[[nodiscard]] PluginHandle  GetPluginHandle() const { return GetProxy().GetPluginHandle(); }
+		const PluginInfo*           GetPluginInfo(const char* a_name) const { return static_cast<const PluginInfo*>(GetProxy().GetPluginInfo(a_name)); }
+		[[nodiscard]] REL::Version  RuntimeVersion() const noexcept { return MakeVersion(GetProxy().runtimeVersion); }
 	};
 
-	class LoadInterface : public QueryInterface
+	class PreLoadInterface :
+		public QueryInterface
+	{
+	public:
+		enum InterfaceType : std::uint32_t
+		{
+			kInvalid = 0,
+			kTrampoline = 2
+		};
+
+		[[nodiscard]] void* QueryInterface(std::uint32_t a_id) const { return GetProxy().QueryInterface(a_id); }
+
+		template <class T>
+		T* QueryInterface(std::uint32_t a_id) const noexcept
+		{
+			auto result = static_cast<T*>(QueryInterface(a_id));
+			if (result && result->Version() > T::kVersion)
+				REX::ERROR("interface definition is out of date");
+
+			return result;
+		}
+	};
+
+	class LoadInterface :
+		public QueryInterface
 	{
 	public:
 		enum InterfaceType : std::uint32_t
@@ -36,26 +125,28 @@ namespace SFSE
 			kTotal
 		};
 
-		[[nodiscard]] PluginHandle GetPluginHandle() const;
+		[[nodiscard]] void* QueryInterface(std::uint32_t a_id) const { return GetProxy().QueryInterface(a_id); }
 
-		const PluginInfo* GetPluginInfo(const char* a_name) const;
+		template <class T>
+		T* QueryInterface(std::uint32_t a_id) const noexcept
+		{
+			auto result = static_cast<T*>(QueryInterface(a_id));
+			if (result && result->Version() > T::kVersion)
+				REX::ERROR("interface definition is out of date");
 
-		[[nodiscard]] void* QueryInterface(std::uint32_t a_id) const;
+			return result;
+		}
 	};
 
 	class MessagingInterface
 	{
-	public:
-		struct Message
+	private:
+		[[nodiscard]] decltype(auto) GetProxy() const noexcept
 		{
-			const char*   sender;
-			std::uint32_t type;
-			std::uint32_t dataLen;
-			void*         data;
-		};
+			return reinterpret_cast<const Impl::SFSEMessagingInterface&>(*this);
+		}
 
-		using EventCallback = std::add_pointer_t<void(Message* a_msg)>;
-
+	public:
 		enum Version : std::uint32_t
 		{
 			kVersion = 1
@@ -69,100 +160,104 @@ namespace SFSE
 			kPostPostDataLoad,
 		};
 
-		[[nodiscard]] std::uint32_t Version() const;
+		struct Message
+		{
+			const char*   sender;
+			std::uint32_t type;
+			std::uint32_t dataLen;
+			void*         data;
+		};
 
-		bool Dispatch(std::uint32_t a_messageType, void* a_data, std::uint32_t a_dataLen, const char* a_receiver) const;
+		using EventCallback = std::add_pointer_t<void(Message* a_msg)>;
 
-		bool RegisterListener(EventCallback a_callback) const;
-
-		bool RegisterListener(const char* a_sender, EventCallback a_callback) const;
-
-	protected:
-		[[nodiscard]] const detail::SFSEMessagingInterface* GetProxy() const;
+		[[nodiscard]] std::uint32_t Version() const noexcept { return GetProxy().interfaceVersion; }
+		bool                        Dispatch(std::uint32_t a_messageType, void* a_data, std::uint32_t a_dataLen, const char* a_receiver) const;
+		bool                        RegisterListener(EventCallback a_callback) const { return RegisterListener("SFSE", a_callback); }
+		bool                        RegisterListener(const char* a_sender, EventCallback a_callback) const;
 	};
 
 	class TrampolineInterface
 	{
+	private:
+		[[nodiscard]] decltype(auto) GetProxy() const noexcept
+		{
+			return reinterpret_cast<const Impl::SFSETrampolineInterface&>(*this);
+		}
+
 	public:
 		enum Version : std::uint32_t
 		{
 			kVersion = 1
 		};
 
-		[[nodiscard]] std::uint32_t Version() const;
-
+		[[nodiscard]] std::uint32_t Version() const noexcept { return GetProxy().interfaceVersion; }
 		[[nodiscard]] void* AllocateFromBranchPool(std::size_t a_size) const;
-
 		[[nodiscard]] void* AllocateFromLocalPool(std::size_t a_size) const;
-
-	private:
-		[[nodiscard]] const detail::SFSETrampolineInterface* GetProxy() const;
 	};
 
 	class MenuInterface
 	{
-	public:
-		using RegCallback = void(RE::IMenu* a_menu);
+	private:
+		[[nodiscard]] decltype(auto) GetProxy() const noexcept
+		{
+			return reinterpret_cast<const Impl::SFSEMenuInterface&>(*this);
+		}
 
+	public:
 		enum Version : std::uint32_t
 		{
 			kVersion = 2
 		};
 
-		[[nodiscard]] std::uint32_t Version() const;
+		using RegCallback = void(RE::IMenu* a_menu);
 
+		[[nodiscard]] std::uint32_t Version() const noexcept { return GetProxy().interfaceVersion; }
 		void Register(RegCallback* a_callback) const;
+	};
 
-	private:
-		[[nodiscard]] const detail::SFSEMenuInterface* GetProxy() const;
+	class ITaskDelegate
+	{
+	public:
+		virtual void Run() = 0;
+		virtual void Destroy() = 0;
 	};
 
 	class TaskInterface
 	{
-	public:
-		using TaskFn = std::function<void()>;
+	private:
+		[[nodiscard]] decltype(auto) GetProxy() const noexcept
+		{
+			return reinterpret_cast<const Impl::SFSETaskInterface&>(*this);
+		}
 
+	public:
 		enum Version : std::uint32_t
 		{
 			kVersion = 1
 		};
 
-		[[nodiscard]] std::uint32_t Version() const;
+		[[nodiscard]] std::uint32_t Version() const noexcept { return GetProxy().interfaceVersion; }
 
-		void AddTask(TaskFn a_fn) const;
-
-		void AddTask(ITaskDelegate* a_task) const;
-
-		void AddPermanentTask(TaskFn a_fn) const;
-
-		void AddPermanentTask(ITaskDelegate* a_task) const;
+		void AddTask(ITaskDelegate* a_task) const { GetProxy().AddTask(a_task); }
+		void AddTask(std::function<void()> a_task) const { GetProxy().AddTask(new Task(std::move(a_task))); }
+		void AddPermanentTask(ITaskDelegate* a_task) const { GetProxy().AddPermanentTask(a_task); }
+		void AddPermanentTask(std::function<void()> a_task) const { GetProxy().AddPermanentTask(new Task(std::move(a_task))); }
 
 	private:
-		class Task : public ITaskDelegate
+		class Task :
+			public ITaskDelegate
 		{
 		public:
-			Task(TaskFn&& a_fn);
+			explicit Task(std::function<void()>&& a_task) noexcept :
+				_impl(std::move(a_task))
+			{}
 
-			void Run() override;
-			void Destroy() override;
+			void Run() override { _impl(); }
+			void Destroy() override { delete this; }
 
 		private:
-			TaskFn _fn;
+			std::function<void()> _impl;
 		};
-
-		[[nodiscard]] const detail::SFSETaskInterface* GetProxy() const;
-	};
-
-	struct PluginInfo
-	{
-		enum Version : std::uint32_t
-		{
-			kVersion = 1
-		};
-
-		std::uint32_t infoVersion;
-		const char*   name;
-		std::uint32_t version;
 	};
 
 	struct PluginVersionData

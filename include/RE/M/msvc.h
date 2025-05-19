@@ -1,6 +1,6 @@
 #pragma once
 
-namespace SFSE::stl::detail
+namespace RE::msvc::detail
 {
 	// TODO: Have this be the default deleter if the object is allocated aligned
 	template <class T>

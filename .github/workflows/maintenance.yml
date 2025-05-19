@@ -1,39 +1,24 @@
-name: Maintenance
+name: Scripted maintenance
 
-on:
-  push:
-    branches: main
-    paths:
-      - "include/**"
-      - "src/**"
-  workflow_dispatch:
-
-concurrency:
-  group: maintenance
-  cancel-in-progress: true
+on: push
 
 jobs:
   maintenance:
     runs-on: ubuntu-latest
 
-    if: github.repository_owner == 'Starfield-Reverse-Engineering'
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      - name: Update Starfield.h
-        shell: pwsh
-        run: "& ${{ github.workspace }}/.github/make-directives.ps1 ${{ github.workspace }}"
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
 
-      - name: Run clang-format
-        uses: DoozyX/clang-format-lint-action@v0.18
-        with:
-          inplace: True
+    - name: Run clang-format
+      run: find -type f \( -name *.h -o -name *.cpp \) | xargs clang-format-16 -style=file -i
 
-      - name: Add & Commit
-        id: registry
-        uses: EndBug/add-and-commit@v9
-        with:
-          default_author: github_actions
-          message: "ci: maintenance"
+    - name: Glob files
+      run: python ${{ github.workspace }}/res/scripts/generate_headers.py
+
+    - uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: maintenance
