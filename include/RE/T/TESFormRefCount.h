@@ -16,13 +16,13 @@ namespace RE
 
 		std::uint64_t IncExternalRefCount() const
 		{
-			stl::atomic_ref myRefCount{ refCount };
+			REX::TAtomicRef myRefCount{ refCount };
 			return (myRefCount += 0x400000) + 0x400000;
 		}
 
 		std::uint64_t IncRefCount() const
 		{
-			stl::atomic_ref myRefCount{ refCount };
+			REX::TAtomicRef myRefCount{ refCount };
 			return ++myRefCount;
 		}
 

@@ -18,7 +18,7 @@ namespace SFSE
 		const char* logPattern{ nullptr };
 		bool        trampoline{ false };
 		std::size_t trampolineSize{ 0 };
-		bool        trampolineSKSE{ true };
+		bool        trampolineSFSE{ true };
 		bool        hook{ true };
 	};
 
@@ -44,5 +44,5 @@ namespace SFSE
 {
 	void Init(const LoadInterface* a_intfc, bool a_log) noexcept;
 
-	void AllocTrampoline(std::size_t a_size, bool a_trySKSEReserve = true) noexcept;
+	void AllocTrampoline(std::size_t a_size, bool a_trySFSEReserve = true) noexcept;
 }

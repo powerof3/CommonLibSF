@@ -74,7 +74,7 @@ namespace RE
 		{
 			const auto mem = malloc(a_size);
 			if (!mem) {
-				stl::report_and_fail("out of memory"sv);
+				REX::FAIL("out of memory"sv);
 			}
 			std::memset(mem, 0, a_size);
 			return mem;
@@ -105,12 +105,12 @@ namespace RE
 			}
 
 			if (!_allocator) {
-				stl::report_and_fail("failed to get thread scrap heap"sv);
+				REX::FAIL("failed to get thread scrap heap"sv);
 			}
 
 			const auto mem = _allocator->Allocate(a_size, alignof(void*));
 			if (!mem) {
-				stl::report_and_fail("failed to handle allocation request"sv);
+				REX::FAIL("failed to handle allocation request"sv);
 			} else {
 				return mem;
 			}
@@ -121,7 +121,7 @@ namespace RE
 			if (_allocator) {
 				_allocator->Deallocate(a_ptr, 0);
 			} else {
-				stl::report_and_fail("failed to deallocate block"sv);
+				REX::FAIL("failed to deallocate block"sv);
 			}
 		}
 

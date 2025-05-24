@@ -9,7 +9,7 @@ namespace SFSE
 	{
 		const auto result = GetProxy().Dispatch(GetPluginHandle(), a_messageType, a_data, a_dataLen, a_receiver);
 		if (!result) {
-			log::error("Failed to dispatch message to {}", (a_receiver ? a_receiver : "all listeners"));
+			REX::ERROR("Failed to dispatch message to {}", (a_receiver ? a_receiver : "all listeners"));
 		}
 
 		return result;
@@ -19,7 +19,7 @@ namespace SFSE
 	{
 		const auto result = GetProxy().RegisterListener(GetPluginHandle(), a_sender, std::bit_cast<void*>(a_callback));
 		if (!result) {
-			log::error("Failed to register messaging listener for {}", a_sender);
+			REX::ERROR("Failed to register messaging listener for {}", a_sender);
 		}
 		return result;
 	}

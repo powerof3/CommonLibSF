@@ -582,7 +582,7 @@ namespace RE::Scaleform::GFx
 			return _objectInterface->CreateEmptyMovieClip(_value.data, a_value, a_name, a_depth);
 		}
 
-		bool GetMember(stl::zstring a_name, Value* a_value) const
+		bool GetMember(std::string_view a_name, Value* a_value) const
 		{
 			assert(IsObject());
 			return _objectInterface->GetMember(_value.data, a_name.data(), a_value, IsDisplayObject());
@@ -611,7 +611,7 @@ namespace RE::Scaleform::GFx
 			return _objectInterface->GetText(_value.data, a_value, true);
 		}
 
-		bool GotoAndPlay(stl::zstring a_frame)
+		bool GotoAndPlay(std::string_view a_frame)
 		{
 			assert(IsDisplayObject());
 			return _objectInterface->GotoAndPlayL(_value.data, a_frame.data(), false);
@@ -623,7 +623,7 @@ namespace RE::Scaleform::GFx
 			return _objectInterface->GotoAndPlay(_value.data, a_frame, false);
 		}
 
-		bool GotoAndStop(stl::zstring a_frame)
+		bool GotoAndStop(std::string_view a_frame)
 		{
 			assert(IsDisplayObject());
 			return _objectInterface->GotoAndPlayL(_value.data, a_frame.data(), true);
@@ -635,7 +635,7 @@ namespace RE::Scaleform::GFx
 			return _objectInterface->GotoAndPlay(_value.data, a_frame, true);
 		}
 
-		[[nodiscard]] bool HasMember(stl::zstring a_name) const
+		[[nodiscard]] bool HasMember(std::string_view a_name) const
 		{
 			assert(IsObject());
 			return _objectInterface->HasMember(_value.data, a_name.data(), IsDisplayObject());
@@ -682,19 +682,19 @@ namespace RE::Scaleform::GFx
 			return _objectInterface->SetArraySize(_value.data, a_size);
 		}
 
-		bool SetMember(stl::zstring a_name, const Value& a_value)
+		bool SetMember(std::string_view a_name, const Value& a_value)
 		{
 			assert(IsObject());
 			return _objectInterface->SetMember(_value.data, a_name.data(), a_value, IsDisplayObject());
 		}
 
-		bool SetText(stl::zstring a_text)
+		bool SetText(std::string_view a_text)
 		{
 			assert(IsDisplayObject());
 			return _objectInterface->SetText(_value.data, a_text.data(), false);
 		}
 
-		bool SetTextHTML(stl::zstring a_text)
+		bool SetTextHTML(std::string_view a_text)
 		{
 			assert(IsDisplayObject());
 			return _objectInterface->SetText(_value.data, a_text.data(), true);

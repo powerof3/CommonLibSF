@@ -73,7 +73,7 @@ namespace RE
 
 		[[nodiscard]] bool IsInChargen()
 		{
-			return *(stl::adjust_pointer<bool>(this, 0xF24));
+			return *(REX::ADJUST_POINTER<bool>(this, 0xF24));
 		}
 
 		// members

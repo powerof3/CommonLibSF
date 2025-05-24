@@ -39,9 +39,9 @@ namespace RE::BSScript
 
 		template <class CharT, std::size_t N1, std::size_t N2>
 		[[nodiscard]] consteval auto make_structure_tag(
-			stl::nttp::string<CharT, N1> a_lhs,
-			stl::nttp::string<CharT, N2> a_rhs) noexcept
-			-> stl::nttp::string<CharT, N1 + 1 + N2>
+			REX::TStaticString<CharT, N1> a_lhs,
+			REX::TStaticString<CharT, N2> a_rhs) noexcept
+			-> REX::TStaticString<CharT, N1 + 1 + N2>
 		{
 			char buf[a_lhs.length() + 1 + a_rhs.length() + 1]{ '\0' };
 			std::copy_n(a_lhs.data(), a_lhs.length(), buf);
@@ -52,12 +52,12 @@ namespace RE::BSScript
 	}
 
 	template <
-		stl::nttp::string Object,
-		stl::nttp::string Structure>
+		REX::TStaticString Object,
+		REX::TStaticString Structure>
 	class structure_wrapper
 	{
 	private:
-		static constexpr stl::nttp::string _full = detail::make_structure_tag(Object, Structure);
+		static constexpr REX::TStaticString _full = detail::make_structure_tag(Object, Structure);
 
 	public:
 		static constexpr std::string_view name{ _full.data(), _full.length() };
@@ -70,7 +70,7 @@ namespace RE::BSScript
 				if (!vm ||
 					!vm->CreateStruct(name, _proxy) ||
 					!_proxy) {
-					SFSE::log::error(
+					REX::ERROR(
 						"failed to create structure of type \"{}\"",
 						name);
 					assert(false);
@@ -91,7 +91,7 @@ namespace RE::BSScript
 			}
 
 			if (!a_quiet) {
-				SFSE::log::warn(
+				REX::WARN(
 					"failed to find var \"{}\" on structure \"{}\"",
 					a_name,
 					name);
@@ -113,7 +113,7 @@ namespace RE::BSScript
 				}
 			}
 
-			SFSE::log::warn(
+			REX::WARN(
 				"failed to pack var \"{}\" on structure \"{}\"",
 				a_name,
 				name);
@@ -206,7 +206,7 @@ namespace RE::BSScript
 			std::false_type
 		{};
 
-		template <stl::nttp::string O, stl::nttp::string S>
+		template <REX::TStaticString O, REX::TStaticString S>
 		struct _is_structure_wrapper<structure_wrapper<O, S>> :
 			std::true_type
 		{};
@@ -386,7 +386,7 @@ namespace RE::BSScript
 			!vm->GetScriptObjectType(GetVMTypeID<T>(), typeInfo) ||
 			!typeInfo) {
 			assert(false);
-			SFSE::log::error("failed to get type info for object"sv);
+			REX::ERROR("failed to get type info for object"sv);
 			return std::nullopt;
 		} else {
 			return typeInfo.get();
@@ -404,7 +404,7 @@ namespace RE::BSScript
 			!vm->GetScriptObjectType(baseObjectName, typeInfo) ||
 			!typeInfo) {
 			assert(false);
-			SFSE::log::error("failed to get type info for vm object"sv);
+			REX::ERROR("failed to get type info for vm object"sv);
 			return std::nullopt;
 		} else {
 			return typeInfo.get();
@@ -465,7 +465,7 @@ namespace RE::BSScript
 				!vm->GetScriptStructType(T::name, typeInfo) ||
 				!typeInfo) {
 				assert(false);
-				SFSE::log::error("failed to get type info for structure"sv);
+				REX::ERROR("failed to get type info for structure"sv);
 				return std::nullopt;
 			} else {
 				return typeInfo.get();
@@ -537,7 +537,7 @@ namespace RE::BSScript
 
 		if (!success) {
 			assert(false);
-			SFSE::log::error("failed to pack variable"sv);
+			REX::ERROR("failed to pack variable"sv);
 			a_var = nullptr;
 		}
 	}
@@ -619,7 +619,7 @@ namespace RE::BSScript
 
 		if (!success) {
 			assert(false);
-			SFSE::log::error("failed to pack array"sv);
+			REX::ERROR("failed to pack array"sv);
 			a_var = nullptr;
 		}
 	}
@@ -689,7 +689,7 @@ namespace RE::BSScript
 
 		if (!result) {
 			assert(false);
-			SFSE::log::error("failed to get object from variable"sv);
+			REX::ERROR("failed to get object from variable"sv);
 		}
 
 		return static_cast<T*>(result);
@@ -1007,7 +1007,7 @@ namespace RE::BSScript
 			const auto stack = a_stackFrame.parent;
 			if (!stack) {
 				assert(false);
-				SFSE::log::error("native function called without relevant stack"sv);
+				REX::ERROR("native function called without relevant stack"sv);
 				return false;
 			}
 
@@ -1061,8 +1061,8 @@ namespace RE::BSScript
 
 	template <class F>
 	void IVirtualMachine::BindNativeMethod(
-		stl::zstring        a_object,
-		stl::zstring        a_function,
+		std::string_view        a_object,
+		std::string_view        a_function,
 		F                   a_func,
 		std::optional<bool> a_taskletCallable,
 		bool                a_isLatent)
@@ -1077,7 +1077,7 @@ namespace RE::BSScript
 			BindNativeMethod(func);
 
 		if (!success) {
-			SFSE::log::warn(
+			REX::WARN(
 				"failed to register method \"{}\" on object \"{}\"",
 				a_function,
 				a_object);

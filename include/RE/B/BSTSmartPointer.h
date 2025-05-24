@@ -6,9 +6,9 @@ namespace RE
 	struct BSTSmartPointerIntrusiveRefCount
 	{
 	public:
-		static void Acquire(stl::not_null<T*> a_ptr) { a_ptr->IncRef(); }
+		static void Acquire(T* a_ptr) { a_ptr->IncRef(); }
 
-		static void Release(stl::not_null<T*> a_ptr)
+		static void Release(T* a_ptr)
 		{
 			if (a_ptr->DecRef() == 0) {
 				delete a_ptr;
@@ -20,32 +20,32 @@ namespace RE
 	struct BSTSmartPointerAutoPtr
 	{
 	public:
-		constexpr static void Acquire(stl::not_null<T*>) { return; }
-		static void           Release(stl::not_null<T*> a_ptr) { delete a_ptr; }
+		constexpr static void Acquire(T*) { return; }
+		static void           Release(T* a_ptr) { delete a_ptr; }
 	};
 
 	template <class T>
 	struct BSTSmartPointerGamebryoRefCount
 	{
 	public:
-		constexpr static void Acquire(stl::not_null<T*> a_ptr) { a_ptr->IncRefCount(); }
-		static void           Release(stl::not_null<T*> a_ptr) { a_ptr->DecRefCount(); }
+		constexpr static void Acquire(T* a_ptr) { a_ptr->IncRefCount(); }
+		static void           Release(T* a_ptr) { a_ptr->DecRefCount(); }
 	};
 
 	template <class T>
 	struct TESFormPolicy
 	{
 	public:
-		constexpr static void Acquire(stl::not_null<T*> a_ptr) { a_ptr->IncRefCount(); }
-		static void           Release(stl::not_null<T*> a_ptr) { a_ptr->DecRefCount(); }
+		constexpr static void Acquire(T* a_ptr) { a_ptr->IncRefCount(); }
+		static void           Release(T* a_ptr) { a_ptr->DecRefCount(); }
 	};
 
 	template <class T>
 	struct TESFormExternalPolicy
 	{
 	public:
-		constexpr static void Acquire(stl::not_null<T*> a_ptr) { a_ptr->IncExternalRefCount(); }
-		static void           Release(stl::not_null<T*> a_ptr) { a_ptr->DecExternalRefCount(); }
+		constexpr static void Acquire(T* a_ptr) { a_ptr->IncExternalRefCount(); }
+		static void           Release(T* a_ptr) { a_ptr->DecExternalRefCount(); }
 	};
 
 	template <class T, template <class> class RefManager = BSTSmartPointerIntrusiveRefCount>

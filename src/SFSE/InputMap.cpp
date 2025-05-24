@@ -1,6 +1,7 @@
 #include "SFSE/InputMap.h"
 
 #include "REX/W32/DINPUT.h"
+#include "REX/W32/USER32.h"
 #include "REX/W32/XINPUT.h"
 
 namespace SFSE
@@ -157,7 +158,9 @@ namespace SFSE
 		const auto         length = REX::W32::GetKeyNameTextW(lParam, buffer, REX::W32::MAX_PATH);
 		const std::wstring keyNameW{ buffer, static_cast<std::size_t>(length) };
 
-		return stl::utf16_to_utf8(keyNameW).value_or(""s);
+		std::string result;
+		REX::UTF16_TO_UTF8(keyNameW, result);
+		return result;
 	}
 
 	std::string InputMap::GetMouseButtonName(const std::uint32_t a_keyCode)

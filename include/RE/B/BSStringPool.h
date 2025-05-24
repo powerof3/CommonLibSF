@@ -22,7 +22,7 @@ namespace RE
 
 			std::uint32_t acquire()
 			{
-				stl::atomic_ref refCount{ _refCount };
+				REX::TAtomicRef refCount{ _refCount };
 				return ++refCount;
 			}
 

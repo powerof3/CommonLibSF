@@ -18,33 +18,32 @@ add_rules("mode.debug", "mode.releasedbg")
 includes("xmake-extra.lua")
 
 -- define options
-option("rex_ini", function()
+option("commonlib_ini", function()
     set_default(false)
     set_description("enable REX::INI settings support")
 end)
 
-option("rex_json", function()
+option("commonlib_json", function()
     set_default(false)
     set_description("enable REX::JSON settings support")
 end)
 
-option("rex_toml", function()
+option("commonlib_toml", function()
     set_default(false)
     set_description("enable REX::TOML settings support")
 end)
 
-option("sfse_xbyak", function()
+option("commonlib_xbyak", function()
     set_default(false)
     set_description("enable xbyak support for trampoline")
-    add_defines("SFSE_SUPPORT_XBYAK=1")
 end)
 
 -- require packages
-add_requires("commonlib-shared 2c5ddece35e5e4acaea9df45c6e2c35dfefb9575", { configs = {
-    rex_ini = has_config("rex_ini"),
-    rex_json = has_config("rex_json"),
-    rex_toml = has_config("rex_toml"),
-    xse_xbyak = has_config("sfse_xbyak")
+add_requires("commonlib-shared f863d3324c07bf09beeea25f554a5cc6f8762f85", { configs = {
+    commonlib_ini = has_config("commonlib_ini"),
+    commonlib_json = has_config("commonlib_json"),
+    commonlib_toml = has_config("commonlib_toml"),
+    commonlib_xbyak = has_config("commonlib_xbyak")
 } })
 
 -- define targets
@@ -57,9 +56,6 @@ target("commonlibsf")
 
     -- add packages
     add_packages("commonlib-shared", { public = true })
-
-    -- add options
-    add_options("rex_ini", "rex_json", "rex_toml", "sfse_xbyak", { public = true })
 
     -- add source files
     add_files("src/**.cpp")

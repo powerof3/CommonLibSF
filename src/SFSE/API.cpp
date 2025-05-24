@@ -3,6 +3,7 @@
 #include "SFSE/Interfaces.h"
 #include "SFSE/Logger.h"
 
+#include <spdlog/spdlog.h>
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/msvc_sink.h>
 
@@ -45,9 +46,6 @@ namespace SFSE
 
 			static std::once_flag once;
 			std::call_once(once, [&]() {
-				const auto iddb = REL::IDDB::GetSingleton();
-				iddb->load(L"Data/SFSE/plugins/versionlib-{}.bin"sv);
-
 				if (const auto data = PluginVersionData::GetSingleton()) {
 					pluginName = data->GetPluginName();
 					pluginAuthor = data->GetAuthorName();
@@ -111,7 +109,7 @@ namespace SFSE
 
 					auto& trampoline = REL::GetTrampoline();
 					if (const auto intfc = GetTrampolineInterface();
-						intfc && info.trampolineSKSE) {
+						intfc && info.trampolineSFSE) {
 						if (const auto mem = intfc->AllocateFromBranchPool(info.trampolineSize))
 							trampoline.set_trampoline(mem, info.trampolineSize);
 						else
@@ -252,12 +250,12 @@ namespace SFSE
 		Init(a_intfc, { .log = a_log });
 	}
 
-	void AllocTrampoline(std::size_t a_size, bool a_trySKSEReserve) noexcept
+	void AllocTrampoline(std::size_t a_size, bool a_trySFSEReserve) noexcept
 	{
 		auto api = Impl::API::GetSingleton();
 		api->info.trampoline = true;
 		api->info.trampolineSize = a_size;
-		api->info.trampolineSKSE = a_trySKSEReserve;
+		api->info.trampolineSFSE = a_trySFSEReserve;
 		api->InitTrampoline();
 	}
 }
