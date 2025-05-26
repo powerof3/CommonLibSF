@@ -15,7 +15,7 @@ add_repositories("libxse-xrepo https://github.com/libxse/libxse-xrepo")
 add_rules("mode.debug", "mode.releasedbg")
 
 -- make extras available
-includes("xmake-extra.lua")
+includes("xmake-rules.lua")
 
 -- define options
 option("commonlib_ini", function()
@@ -39,11 +39,11 @@ option("commonlib_xbyak", function()
 end)
 
 -- require packages
-add_requires("commonlib-shared f863d3324c07bf09beeea25f554a5cc6f8762f85", { configs = {
-    commonlib_ini = has_config("commonlib_ini"),
-    commonlib_json = has_config("commonlib_json"),
-    commonlib_toml = has_config("commonlib_toml"),
-    commonlib_xbyak = has_config("commonlib_xbyak")
+add_requires("commonlib-shared 5796b8a0a2368a628516d34ecf504ca3cde2d4e4", { configs = {
+    ini = has_config("commonlib_ini"),
+    json = has_config("commonlib_json"),
+    toml = has_config("commonlib_toml"),
+    xbyak = has_config("commonlib_xbyak")
 } })
 
 -- define targets
