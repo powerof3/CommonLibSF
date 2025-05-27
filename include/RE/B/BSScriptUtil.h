@@ -148,14 +148,16 @@ namespace RE::BSScript
 		class T,
 		class Allocator>
 	struct script_traits<
-		std::vector<T, Allocator>> final
+		std::vector<T, Allocator>>
+		final
 	{
 		using is_array = std::true_type;
 	};
 
 	template <class Traits>
 	struct script_traits<
-		std::basic_string_view<char, Traits>> final
+		std::basic_string_view<char, Traits>>
+		final
 	{
 		using is_string = std::true_type;
 	};
@@ -164,21 +166,24 @@ namespace RE::BSScript
 		class Traits,
 		class Allocator>
 	struct script_traits<
-		std::basic_string<char, Traits, Allocator>> final
+		std::basic_string<char, Traits, Allocator>>
+		final
 	{
 		using is_string = std::true_type;
 	};
 
 	template <class CharT, bool CS>
 	struct script_traits<
-		RE::detail::BSFixedString<CharT, CS>> final
+		RE::detail::BSFixedString<CharT, CS>>
+		final
 	{
 		using is_string = std::true_type;
 	};
 
 	template <class T>
 	struct script_traits<
-		std::optional<T>> final
+		std::optional<T>>
+		final
 	{
 		using is_nullable = std::true_type;
 	};
@@ -1061,8 +1066,8 @@ namespace RE::BSScript
 
 	template <class F>
 	void IVirtualMachine::BindNativeMethod(
-		std::string_view        a_object,
-		std::string_view        a_function,
+		std::string_view    a_object,
+		std::string_view    a_function,
 		F                   a_func,
 		std::optional<bool> a_taskletCallable,
 		bool                a_isLatent)

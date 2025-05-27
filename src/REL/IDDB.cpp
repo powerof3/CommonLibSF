@@ -277,63 +277,63 @@ namespace REL
 			const auto hi = static_cast<std::uint8_t>(type >> 4);
 
 			switch (lo) {
-				case 0:
-					a_stream.readin(id);
-					break;
-				case 1:
-					id = prevID + 1;
-					break;
-				case 2:
-					id = prevID + a_stream.readout<std::uint8_t>();
-					break;
-				case 3:
-					id = prevID - a_stream.readout<std::uint8_t>();
-					break;
-				case 4:
-					id = prevID + a_stream.readout<std::uint16_t>();
-					break;
-				case 5:
-					id = prevID - a_stream.readout<std::uint16_t>();
-					break;
-				case 6:
-					id = a_stream.readout<std::uint16_t>();
-					break;
-				case 7:
-					id = a_stream.readout<std::uint32_t>();
-					break;
-				default:
-					REX::FAIL("Unhandled type while loading Address Library!");
+			case 0:
+				a_stream.readin(id);
+				break;
+			case 1:
+				id = prevID + 1;
+				break;
+			case 2:
+				id = prevID + a_stream.readout<std::uint8_t>();
+				break;
+			case 3:
+				id = prevID - a_stream.readout<std::uint8_t>();
+				break;
+			case 4:
+				id = prevID + a_stream.readout<std::uint16_t>();
+				break;
+			case 5:
+				id = prevID - a_stream.readout<std::uint16_t>();
+				break;
+			case 6:
+				id = a_stream.readout<std::uint16_t>();
+				break;
+			case 7:
+				id = a_stream.readout<std::uint32_t>();
+				break;
+			default:
+				REX::FAIL("Unhandled type while loading Address Library!");
 			}
 
 			const std::uint64_t tmp = (hi & 8) != 0 ? (prevOffset / a_header.pointer_size()) : prevOffset;
 
 			switch (hi & 7) {
-				case 0:
-					a_stream.readin(offset);
-					break;
-				case 1:
-					offset = tmp + 1;
-					break;
-				case 2:
-					offset = tmp + a_stream.readout<std::uint8_t>();
-					break;
-				case 3:
-					offset = tmp - a_stream.readout<std::uint8_t>();
-					break;
-				case 4:
-					offset = tmp + a_stream.readout<std::uint16_t>();
-					break;
-				case 5:
-					offset = tmp - a_stream.readout<std::uint16_t>();
-					break;
-				case 6:
-					offset = a_stream.readout<std::uint16_t>();
-					break;
-				case 7:
-					offset = a_stream.readout<std::uint32_t>();
-					break;
-				default:
-					REX::FAIL("Unhandled type while loading Address Library!");
+			case 0:
+				a_stream.readin(offset);
+				break;
+			case 1:
+				offset = tmp + 1;
+				break;
+			case 2:
+				offset = tmp + a_stream.readout<std::uint8_t>();
+				break;
+			case 3:
+				offset = tmp - a_stream.readout<std::uint8_t>();
+				break;
+			case 4:
+				offset = tmp + a_stream.readout<std::uint16_t>();
+				break;
+			case 5:
+				offset = tmp - a_stream.readout<std::uint16_t>();
+				break;
+			case 6:
+				offset = a_stream.readout<std::uint16_t>();
+				break;
+			case 7:
+				offset = a_stream.readout<std::uint32_t>();
+				break;
+			default:
+				REX::FAIL("Unhandled type while loading Address Library!");
 			}
 
 			if ((hi & 8) != 0) {

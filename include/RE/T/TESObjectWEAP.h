@@ -28,7 +28,7 @@ namespace RE
 		char         pad_0028[8];    // 0x0028
 		uint32_t     ammoCapacity;   // 0x0030
 		char         pad_0034[336];  // 0x0034
-	};  // Size: 0x0184
+	};                               // Size: 0x0184
 
 	static_assert(offsetof(WeaponAmmoData, ammo) == 0x18);
 
@@ -52,7 +52,7 @@ namespace RE
 		float                                                                                               N00000175;             // 0x0048
 		float                                                                                               critChanceIncMult;     // 0x004C
 		RE::BSTArray<RE::BSTTuple3<RE::TESForm*, RE::BGSCurveForm*, RE::BGSTypedFormValuePair::SharedVal>>* damageTypes;           // 0x0050
-	};  // Size: 0x0140
+	};                                                                                                                             // Size: 0x0140
 
 	static_assert(offsetof(WeaponDamageData, critChanceIncMult) == 0x4C);
 	static_assert(offsetof(WeaponDamageData, damageTypes) == 0x50);
@@ -121,7 +121,7 @@ namespace RE
 		float        baseSpeed;         // 0x0044
 		float        attackOxygenCost;  // 0x0048
 		char         pad_004C[1];       // 0x004C
-	};  // Size: 0x004D
+	};                                  // Size: 0x004D
 
 	class WeapDataMelee
 	{
@@ -132,13 +132,13 @@ namespace RE
 		float   reach;          // 0x0018
 		uint8_t Stagger;        // 0x001C
 		char    pad_001D[291];  // 0x001D
-	};  // Size: 0x0140
+	};                          // Size: 0x0140
 
 	class WeaponDataPower
 	{
 	public:
 		char pad_0000[64];  // 0x0000
-	};  // Size: 0x0040
+	};                      // Size: 0x0040
 
 	class WeapDataReload
 	{
@@ -149,25 +149,25 @@ namespace RE
 		float Reloadspeed;  // 0x0014
 		bool  Charging;     // 0x0018
 		bool  Single;       // 0x0019
-	};  // Size: 0x001A
+	};                      // Size: 0x001A
 
 	class WeapDataTurret
 	{
 	public:
 		char pad_0000[1088];  // 0x0000
-	};  // Size: 0x0440
+	};                        // Size: 0x0440
 
 	class WeapDataVariableRange
 	{
 	public:
 		char pad_0000[64];  // 0x0000
-	};  // Size: 0x0040
+	};                      // Size: 0x0040
 
 	class WeapDataVisuals
 	{
 	public:
 		char pad_0000[64];  // 0x0000
-	};  // Size: 0x0040
+	};                      // Size: 0x0040
 
 	class WeapDataShipWeapon
 	{
@@ -179,19 +179,19 @@ namespace RE
 		float Unknown2;      // 0x002C
 		float Unknown3;      // 0x0030
 		char  pad_0034[12];  // 0x0034
-	};  // Size: 0x0040
+	};                       // Size: 0x0040
 
 	class WeaponDataAudio
 	{
 	public:
 		char pad_0000[64];  // 0x0000
-	};  // Size: 0x0040
+	};                      // Size: 0x0040
 
 	class WeaponDataCharge
 	{
 	public:
 		char pad_0000[64];  // 0x0000
-	};  // Size: 0x0040
+	};                      // Size: 0x0040
 
 	class WeaponDataAim
 	{

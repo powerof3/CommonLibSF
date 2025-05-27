@@ -191,8 +191,8 @@ namespace SFSE
 		};
 
 		[[nodiscard]] std::uint32_t Version() const noexcept { return GetProxy().interfaceVersion; }
-		[[nodiscard]] void* AllocateFromBranchPool(std::size_t a_size) const;
-		[[nodiscard]] void* AllocateFromLocalPool(std::size_t a_size) const;
+		[[nodiscard]] void*         AllocateFromBranchPool(std::size_t a_size) const;
+		[[nodiscard]] void*         AllocateFromLocalPool(std::size_t a_size) const;
 	};
 
 	class MenuInterface
@@ -212,7 +212,7 @@ namespace SFSE
 		using RegCallback = void(RE::IMenu* a_menu);
 
 		[[nodiscard]] std::uint32_t Version() const noexcept { return GetProxy().interfaceVersion; }
-		void Register(RegCallback* a_callback) const;
+		void                        Register(RegCallback* a_callback) const;
 	};
 
 	class ITaskDelegate

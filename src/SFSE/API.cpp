@@ -3,9 +3,9 @@
 #include "SFSE/Interfaces.h"
 #include "SFSE/Logger.h"
 
-#include <spdlog/spdlog.h>
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/msvc_sink.h>
+#include <spdlog/spdlog.h>
 
 namespace SFSE
 {

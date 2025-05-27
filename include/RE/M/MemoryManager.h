@@ -403,7 +403,7 @@ namespace RE
 		if (!mem)                                                         \
 			REX::FAIL("out of memory");                                   \
                                                                           \
-        return mem;                                                       \
+		return mem;                                                       \
 	}                                                                     \
                                                                           \
 	[[nodiscard]] void* operator new[](std::size_t a_count)               \

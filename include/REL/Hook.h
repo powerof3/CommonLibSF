@@ -87,22 +87,30 @@ namespace REL
 			REL::Write(std::span{ m_bytesOld }, m_address);
 
 			switch (m_type) {
-				case HOOK_TYPE::CALL5: {
+			case HOOK_TYPE::CALL5:
+				{
 					ASM::CALL5 assembly(m_address, GetTrampoline().allocate_branch5(m_function));
 					REL::WriteData(std::span{ m_bytes }, assembly);
-				} break;
-				case HOOK_TYPE::CALL6: {
+				}
+				break;
+			case HOOK_TYPE::CALL6:
+				{
 					ASM::CALL6 assembly(m_address, GetTrampoline().allocate_branch6(m_function));
 					REL::WriteData(std::span{ m_bytes }, assembly);
-				} break;
-				case HOOK_TYPE::JMP5: {
+				}
+				break;
+			case HOOK_TYPE::JMP5:
+				{
 					ASM::JMP5 assembly(m_address, GetTrampoline().allocate_branch5(m_function));
 					REL::WriteData(std::span{ m_bytes }, assembly);
-				} break;
-				case HOOK_TYPE::JMP6: {
+				}
+				break;
+			case HOOK_TYPE::JMP6:
+				{
 					ASM::JMP6 assembly(m_address, GetTrampoline().allocate_branch6(m_function));
 					REL::WriteData(std::span{ m_bytes }, assembly);
-				} break;
+				}
+				break;
 			}
 
 			return true;
@@ -147,34 +155,44 @@ namespace REL
 		{
 			const auto op = reinterpret_cast<std::uint8_t*>(m_address);
 			switch (*op) {
-				case 0xE8: {
+			case 0xE8:
+				{
 					m_type = HOOK_TYPE::CALL5;
 					m_size = sizeof(ASM::CALL5);
 					m_sizeTrampoline = sizeof(ASM::JMP14);
 					m_functionOld = ASM::CALL5::TARGET(m_address);
-				} break;
-				case 0xE9: {
+				}
+				break;
+			case 0xE9:
+				{
 					m_type = HOOK_TYPE::JMP5;
 					m_size = sizeof(ASM::JMP5);
 					m_sizeTrampoline = sizeof(ASM::JMP14);
 					m_functionOld = ASM::JMP5::TARGET(m_address);
-				} break;
-				case 0xFF: {
+				}
+				break;
+			case 0xFF:
+				{
 					switch (*(op + 1)) {
-						case 0x15: {
+					case 0x15:
+						{
 							m_type = HOOK_TYPE::CALL6;
 							m_size = sizeof(ASM::CALL6);
 							m_sizeTrampoline = sizeof(std::uintptr_t);
 							m_functionOld = ASM::CALL6::TARGET(m_address);
-						} break;
-						case 0x25: {
+						}
+						break;
+					case 0x25:
+						{
 							m_type = HOOK_TYPE::JMP6;
 							m_size = sizeof(ASM::JMP6);
 							m_sizeTrampoline = sizeof(std::uintptr_t);
 							m_functionOld = ASM::JMP6::TARGET(m_address);
-						} break;
+						}
+						break;
 					}
-				} break;
+				}
+				break;
 			}
 
 			m_bytes.resize(m_size);
