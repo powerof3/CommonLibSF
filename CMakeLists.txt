@@ -152,8 +152,13 @@ function(configure_target TARGET_NAME)
     advapi32.lib
     bcrypt.lib
     dbghelp.lib
+    d3d11.lib
+    d3dcompiler.lib
+    dbghelp.lib
     dxgi.lib
     ole32.lib
+    shell32.lib
+    user32.lib
     version.lib
     ws2_32.lib
   )
