@@ -1,12 +1,11 @@
 #pragma once
 
 #include "RE/B/BSTEvent.h"
+#include "RE/N/NiSmartPointer.h"
+#include "RE/S/SceneGraph.h"
 
 namespace RE
 {
-	class NiAVObject;
-	class NiCamera;
-
 	struct PositionPlayerEvent;
 
 	class Main :
@@ -15,15 +14,6 @@ namespace RE
 	public:
 		SF_RTTI_VTABLE(Main);
 
-		struct SceneGraphRoot
-		{
-			// members
-			std::byte   pad00[0x78];      // 00
-			NiAVObject* worldCameraRoot;  // 78 - NiNode
-			NiCamera*   worldCamera;      // 80
-		};
-		// static_assert(offsetof(SceneGraphRoot, SceneGraphRoot::worldCamera) == 0x80); // FIXME: clang-cl chokes on this assertion
-
 		virtual ~Main();  // 00
 
 		// override
@@ -31,19 +21,30 @@ namespace RE
 
 		[[nodiscard]] static Main* GetSingleton()
 		{
-			static REL::Relocation<Main**> singleton{ REL::ID(881027) };
+			static REL::Relocation<Main**> singleton{ ID::Main::Singleton };
 			return *singleton;
 		}
 
-		[[nodiscard]] static SceneGraphRoot* WorldRoot()
+		[[nodiscard]] static SceneGraph* GetWorldRoot()
 		{
-			static REL::Relocation<SceneGraphRoot**> worldRoot{ REL::ID(887308) };
-			return *worldRoot;
+			static REL::Relocation<SceneGraph**> ptr{ ID::Main::WorldRoot };
+			return *ptr;
 		}
 
-		[[nodiscard]] static NiCamera* WorldRootCamera()
+		[[nodiscard]] static NiPointer<NiCamera> GetWorldRootCamera()
 		{
-			return WorldRoot()->worldCamera;
+			return GetWorldRoot()->camera;
 		}
+
+		// members
+		std::byte pad008[0x020];     // 008
+		bool      quitGame;          // 028
+		std::byte pad029[0x005];     // 029
+		bool      resetGame;         // 02E
+		std::byte pad02F[0x419];     // 02F
+		bool      isGameMenuPaused;  // 448
 	};
+	static_assert(offsetof(Main, quitGame) == 0x028);
+	static_assert(offsetof(Main, resetGame) == 0x02E);
+	static_assert(offsetof(Main, isGameMenuPaused) == 0x448);
 }

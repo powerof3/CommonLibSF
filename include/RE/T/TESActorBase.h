@@ -7,6 +7,7 @@
 #include "RE/B/BGSPerkRankArray.h"
 #include "RE/B/BGSPropertySheet.h"
 #include "RE/B/BGSSkinForm.h"
+#include "RE/S/Sexes.h"
 #include "RE/T/TESAIForm.h"
 #include "RE/T/TESActorBaseData.h"
 #include "RE/T/TESBoundAnimObject.h"
@@ -18,20 +19,20 @@ namespace RE
 {
 	class TESCombatStyle;
 
-	class TESActorBase :
+	class __declspec(novtable) TESActorBase :
 		public TESBoundAnimObject,         // 000
 		public TESActorBaseData,           // 0E0
-		public TESContainer,               // 150
-		public TESSpellList,               // 168
-		public TESAIForm,                  // 180
-		public TESFullName,                // 1C0
-		public ActorValueOwner,            // 1D0
-		public BGSDestructibleObjectForm,  // 1D8
-		public BGSSkinForm,                // 1E8
-		public BGSKeywordForm,             // 1F8
-		public BGSAttackDataForm,          // 228
-		public BGSPerkRankArray,           // 238
-		public BGSPropertySheet            // 250
+		public TESContainer,               // 168
+		public TESSpellList,               // 180
+		public TESAIForm,                  // 198
+		public TESFullName,                // 1D8
+		public ActorValueOwner,            // 1E0
+		public BGSDestructibleObjectForm,  // 1F0
+		public BGSSkinForm,                // 200
+		public BGSKeywordForm,             // 218
+		public BGSAttackDataForm,          // 240
+		public BGSPerkRankArray,           // 250
+		public BGSPropertySheet            // 268
 	{
 	public:
 		SF_RTTI_VTABLE(TESActorBase);
@@ -43,6 +44,11 @@ namespace RE
 		virtual TESCombatStyle* GetCombatStyle();                 // 83
 		virtual void            SetCombatStyle(TESCombatStyle*);  // 84
 		virtual TESForm*        GetAsForm();                      // 85
+
+		[[nodiscard]] SEX GetSex() const
+		{
+			return IsFemale() ? SEX::kFemale : SEX::kMale;
+		}
 	};
-	static_assert(sizeof(TESActorBase) == 0x268);
+	static_assert(sizeof(TESActorBase) == 0x270);
 }

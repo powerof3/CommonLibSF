@@ -106,13 +106,14 @@
 
 static_assert(std::is_integral_v<std::time_t> && sizeof(std::time_t) == sizeof(std::size_t), "wrap std::time_t instead");
 
+#include "REX/REX/Enum.h"
+#include "REX/REX/EnumSet.h"
+#include "REX/W32/KERNEL32.h"
+#include "REX/W32/USER32.h"
+
 #pragma warning(push)
 #include <spdlog/spdlog.h>
 #pragma warning(pop)
-
-#include "REX/REX.h"
-#include "REX/W32/KERNEL32.h"
-#include "REX/W32/USER32.h"
 
 #define AsAddress(ptr) std::bit_cast<std::uintptr_t>(ptr)
 #define AsPointer(addr) std::bit_cast<void*>(addr)
@@ -295,17 +296,6 @@ namespace SFSE::stl
 		} else {
 			return reinterpret_cast<T*>(addr);
 		}
-	}
-
-	template <class T>
-	bool emplace_vtable(T* a_ptr)
-	{
-		auto address = T::VTABLE[0].address();
-		if (!address) {
-			return false;
-		}
-		reinterpret_cast<std::uintptr_t*>(a_ptr)[0] = address;
-		return true;
 	}
 
 	template <class T>

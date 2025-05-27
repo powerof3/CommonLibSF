@@ -5,7 +5,7 @@
   "description": "A collaborative reverse-engineered library for Starfield.",
   "homepage": "https://github.com/Starfield-Reverse-Engineering/CommonLibSF",
   "license": "GPL-3.0-or-later",
-  "builtin-baseline": "9558037875497b9db8cf38fcd7db68ec661bffe7",
+  "builtin-baseline": "5a874b05fb981e2643fd0c1c9ad63e19dfe76b27",
   "dependencies": [
     "spdlog"
   ],
@@ -13,7 +13,7 @@
     "registries": [
       {
         "kind": "git",
-        "baseline": "e376718dc96bd2a6431cc8f7b05eca555d51a123",
+        "baseline": "fb5036b5d2a8321a552d44173d60f772761ea097",
         "repository": "https://github.com/ThirdEyeSqueegee/vcpkg-ports",
         "packages": [
           "spdlog"

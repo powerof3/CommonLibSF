@@ -5,6 +5,17 @@
 
 namespace RE
 {
+	class HUDModeType
+	{
+	public:
+		HUDModeType(const char* a_str) :
+			str(a_str)
+		{}
+
+		// members
+		BSFixedString str;
+	};
+
 	class GameMenuBase :
 		public IMenu  // 00
 	{
@@ -17,7 +28,7 @@ namespace RE
 		GameMenuBase()
 		{
 			using func_t = GameMenuBase* (*)(GameMenuBase*);
-			static REL::Relocation<func_t> func(REL::ID(130577));
+			static REL::Relocation<func_t> func{ ID::GameMenuBase::Ctor };
 			func(this);
 		}
 

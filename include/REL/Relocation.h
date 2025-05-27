@@ -149,6 +149,18 @@ namespace REL
 		}
 	}
 
+	template <class T>
+	bool EmplaceVTable(T* a_ptr)
+	{
+		auto address = T::VTABLE[0].address();
+		if (address) {
+			reinterpret_cast<std::uintptr_t*>(a_ptr)[0] = address;
+			return true;
+		}
+
+		return true;
+	}
+
 	template <class F, class... Args>
 	constexpr std::invoke_result_t<F, Args...> invoke(F&& a_func, Args&&... a_args)  //
 		noexcept(std::is_nothrow_invocable_v<F, Args...>)
@@ -266,6 +278,39 @@ namespace REL
 			return stl::unrestricted_cast<value_type>(_address);
 		}
 
+		template <std::ptrdiff_t O = 0>
+		void replace_func(const std::size_t a_count, const std::uintptr_t a_dst)
+			requires(std::same_as<value_type, std::uintptr_t>)
+		{
+#pragma pack(push, 1)
+			struct Assembly
+			{
+				std::uint8_t  jmp;
+				std::uint8_t  modrm;
+				std::int32_t  disp;
+				std::uint64_t addr;
+			};
+			static_assert(sizeof(Assembly) == 0xE);
+#pragma pack(pop)
+
+			Assembly assembly{
+				.jmp = static_cast<std::uint8_t>(0xFF),
+				.modrm = static_cast<std::uint8_t>(0x25),
+				.disp = static_cast<std::int32_t>(0),
+				.addr = static_cast<std::uint64_t>(a_dst),
+			};
+
+			safe_fill(address() + O, INT3, a_count);
+			safe_write(address() + O, &assembly, sizeof(assembly));
+		}
+
+		template <std::ptrdiff_t O = 0, class F>
+		void replace_func(const std::size_t a_count, const F a_dst)
+			requires(std::same_as<value_type, std::uintptr_t>)
+		{
+			replace_func<O>(a_count, stl::unrestricted_cast<std::uintptr_t>(a_dst));
+		}
+
 		void write(const void* a_src, std::size_t a_count)
 			requires(std::same_as<value_type, std::uintptr_t>)
 		{
@@ -292,32 +337,32 @@ namespace REL
 			safe_write(address(), a_data.data(), a_data.size_bytes());
 		}
 
-		template <std::size_t N>
+		template <std::size_t N, std::ptrdiff_t O = 0>
 		std::uintptr_t write_branch(const std::uintptr_t a_dst)
 			requires(std::same_as<value_type, std::uintptr_t>)
 		{
-			return SFSE::GetTrampoline().write_branch<N>(address(), a_dst);
+			return SFSE::GetTrampoline().write_branch<N>(address() + O, a_dst);
 		}
 
-		template <std::size_t N, class F>
+		template <std::size_t N, std::ptrdiff_t O = 0, class F>
 		std::uintptr_t write_branch(const F a_dst)
 			requires(std::same_as<value_type, std::uintptr_t>)
 		{
-			return SFSE::GetTrampoline().write_branch<N>(address(), stl::unrestricted_cast<std::uintptr_t>(a_dst));
+			return SFSE::GetTrampoline().write_branch<N>(address() + O, stl::unrestricted_cast<std::uintptr_t>(a_dst));
 		}
 
-		template <std::size_t N>
+		template <std::size_t N, std::ptrdiff_t O = 0>
 		std::uintptr_t write_call(const std::uintptr_t a_dst)
 			requires(std::same_as<value_type, std::uintptr_t>)
 		{
-			return SFSE::GetTrampoline().write_call<N>(address(), a_dst);
+			return SFSE::GetTrampoline().write_call<N>(address() + O, a_dst);
 		}
 
-		template <std::size_t N, class F>
+		template <std::size_t N, std::ptrdiff_t O = 0, class F>
 		std::uintptr_t write_call(const F a_dst)
 			requires(std::same_as<value_type, std::uintptr_t>)
 		{
-			return SFSE::GetTrampoline().write_call<N>(address(), stl::unrestricted_cast<std::uintptr_t>(a_dst));
+			return SFSE::GetTrampoline().write_call<N>(address() + O, stl::unrestricted_cast<std::uintptr_t>(a_dst));
 		}
 
 		void write_fill(const std::uint8_t a_value, const std::size_t a_count)
