@@ -82,6 +82,7 @@ function(configure_target TARGET_NAME)
     /wd4068 # unknown pragma
     /wd4200 # nonstandard extension used: zero-sized array in struct/union
     /wd4201 # nonstandard extension used: nameless struct/union
+    /wd4324 # structure was padded due to alignment specifier
   )
 
   if(CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL MSVC AND CMAKE_CXX_COMPILER_ID STREQUAL Clang)
