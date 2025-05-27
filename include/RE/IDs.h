@@ -78,10 +78,11 @@ namespace RE::ID
 
 	namespace BGSSaveLoadManager
 	{
+		inline constexpr REL::ID IsLoadingAllowed{ 98657 };
 		inline constexpr REL::ID DeleteSaveFile{ 0 };          // 147844
 		inline constexpr REL::ID QueueBuildSaveGameList{ 0 };  // 147900
 		inline constexpr REL::ID QueueSaveLoadTask{ 0 };       // 1536882
-		inline constexpr REL::ID Singleton{ 0 };               // 880997
+		inline constexpr REL::ID Singleton{ 883588 };
 	}
 
 	namespace BGSStoryTeller
