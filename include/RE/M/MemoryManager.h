@@ -371,7 +371,7 @@ namespace RE
 		if (mem)                                                                                     \
 			return mem;                                                                              \
                                                                                                      \
-		REX::FAIL("out of memory");                                                   \
+		REX::FAIL("out of memory");                                                                  \
 	}                                                                                                \
                                                                                                      \
 	[[nodiscard]] void* operator new[](std::size_t a_count, std::align_val_t a_alignment)            \
@@ -380,7 +380,7 @@ namespace RE
 		if (mem)                                                                                     \
 			return mem;                                                                              \
                                                                                                      \
-		REX::FAIL("out of memory");                                                   \
+		REX::FAIL("out of memory");                                                                  \
 	}                                                                                                \
                                                                                                      \
 	[[nodiscard]] void* operator new(std::size_t, void* a_ptr) { return a_ptr; }                     \
@@ -400,19 +400,19 @@ namespace RE
 	[[nodiscard]] void* operator new(std::size_t a_count)                 \
 	{                                                                     \
 		const auto mem = RE::malloc(a_count);                             \
-		if (mem)                                                          \
-			return mem;                                                   \
+		if (!mem)                                                         \
+			REX::FAIL("out of memory");                                   \
                                                                           \
-		REX::FAIL("out of memory");                        \
+        return mem;                                                       \
 	}                                                                     \
                                                                           \
 	[[nodiscard]] void* operator new[](std::size_t a_count)               \
 	{                                                                     \
 		const auto mem = RE::malloc(a_count);                             \
-		if (mem)                                                          \
-			return mem;                                                   \
+		if (!mem)                                                         \
+			REX::FAIL("out of memory");                                   \
                                                                           \
-		REX::FAIL("out of memory");                        \
+		return mem;                                                       \
 	}                                                                     \
                                                                           \
 	void operator delete(void* a_ptr) { RE::free(a_ptr); }                \
@@ -429,7 +429,7 @@ namespace RE
 		if (mem)                                                                \
 			return mem;                                                         \
                                                                                 \
-		REX::FAIL("out of memory");                              \
+		REX::FAIL("out of memory");                                             \
 	}                                                                           \
                                                                                 \
 	[[nodiscard]] void* operator new[](std::size_t a_count)                     \
@@ -438,7 +438,7 @@ namespace RE
 		if (mem)                                                                \
 			return mem;                                                         \
                                                                                 \
-		REX::FAIL("out of memory");                              \
+		REX::FAIL("out of memory");                                             \
 	}                                                                           \
                                                                                 \
 	void operator delete(void* a_ptr) { RE::free(a_ptr, true); }                \
