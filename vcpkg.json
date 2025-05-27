@@ -7,6 +7,9 @@
   "license": "GPL-3.0-or-later",
   "builtin-baseline": "8f63c9ed5897d7367a92a442a79f91721e0fd38f",
   "dependencies": [
-    "spdlog"
+    {
+      "name": "spdlog",
+      "features": [ "wchar" ]
+    }
   ]
 }
