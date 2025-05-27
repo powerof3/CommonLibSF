@@ -201,15 +201,15 @@ namespace RE::ID
 	{
 		namespace Entry
 		{
-			inline constexpr REL::ID release{ 0 };  // 36754
+			inline constexpr REL::ID release{ 139340 };
 		}
 
 		namespace BucketTable
 		{
-			inline constexpr REL::ID GetSingleton{ 0 };  // 198241
+			inline constexpr REL::ID GetSingleton{ 139337 };
 		}
 
-		inline constexpr REL::ID GetEntry_char_{ 0 };     // 198219
+		inline constexpr REL::ID GetEntry_char_{ 139352 };
 		inline constexpr REL::ID GetEntry_wchar_t_{ 0 };  // 198220
 	}
 
@@ -366,9 +366,9 @@ namespace RE::ID
 			inline constexpr REL::ID dtor{ 0 };  // 178516
 		}
 
-		inline constexpr REL::ID GetSingleton{ 0 };        // 33961
-		inline constexpr REL::ID Allocate{ 0 };            // 33962
-		inline constexpr REL::ID Free{ 0 };                // 34032
+		inline constexpr REL::ID GetSingleton{ 35721 };
+		inline constexpr REL::ID Allocate{ 123792 };
+		inline constexpr REL::ID Free{ 123793 };
 		inline constexpr REL::ID GetThreadScrapHeap{ 0 };  // 36848
 	}
 
@@ -532,9 +532,9 @@ namespace RE::ID
 	namespace TESForm
 	{
 		inline constexpr REL::ID DecExternalRefCount{ 0 };  // 34165
-		inline constexpr REL::ID DecRefCount{ 0 };          // 35164
-		inline constexpr REL::ID LookupByID{ 0 };           // 86125
-		inline constexpr REL::ID LookupByEditorID{ 0 };     // 86123
+		inline constexpr REL::ID DecRefCount{ 38742 };
+		inline constexpr REL::ID LookupByID{ 47401 };
+		inline constexpr REL::ID LookupByEditorID{ 47403 };
 	}
 
 	namespace TESNPC

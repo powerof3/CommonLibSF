@@ -148,7 +148,7 @@ namespace RE
 		std::uint64_t DecExternalRefCount() const
 		{
 			using func_t = decltype(&TESForm::DecRefCount);
-			static REL::Relocation<func_t> func{ ID::TESForm::DecExternalRefCount };  // TODO: ID changed
+			static REL::Relocation<func_t> func{ ID::TESForm::DecExternalRefCount };
 			return func(this);
 		}
 
