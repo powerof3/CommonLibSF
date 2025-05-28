@@ -360,6 +360,13 @@ namespace RE
 			return func(this);
 		}
 
+		void RewardExperience(float a_xpExperience, std::uint32_t a_type, bool a_useModifiers, TESObjectREFR* a_actionRef, std::uint64_t a_arg6 = 0, std::uint64_t a_arg7 = 0)
+		{
+			using func_t = decltype(&Actor::RewardExperience);
+			static REL::Relocation<func_t> func{ ID::Actor::RewardExperience };
+			func(this, a_xpExperience, a_type, a_useModifiers, a_actionRef, a_arg6, a_arg7);
+		}
+
 		void SetSkinTone(std::uint32_t a_index)
 		{
 			using func_t = decltype(&Actor::SetSkinTone);

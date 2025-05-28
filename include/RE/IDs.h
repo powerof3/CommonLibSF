@@ -4,12 +4,13 @@ namespace RE::ID
 {
 	namespace Actor
 	{
-		inline constexpr REL::ID EvaluatePackage{ 0 };          // 150640
-		inline constexpr REL::ID GetActorKnowledge{ 0 };        // 150669
-		inline constexpr REL::ID IsHostileToActor{ 0 };         // 150777
-		inline constexpr REL::ID IsJumping{ 0 };                // 150985
-		inline constexpr REL::ID IsOverEncumbered{ 0 };         // 150999
-		inline constexpr REL::ID IsSneaking{ 0 };               // 151014
+		inline constexpr REL::ID EvaluatePackage{ 0 };    // 150640
+		inline constexpr REL::ID GetActorKnowledge{ 0 };  // 150669
+		inline constexpr REL::ID IsHostileToActor{ 0 };   // 150777
+		inline constexpr REL::ID IsJumping{ 0 };          // 150985
+		inline constexpr REL::ID IsOverEncumbered{ 0 };   // 150999
+		inline constexpr REL::ID IsSneaking{ 0 };         // 151014
+		inline constexpr REL::ID RewardExperience{ 101322 };
 		inline constexpr REL::ID SetSkinTone{ 0 };              // 146270
 		inline constexpr REL::ID UpdateAppearance{ 0 };         // 151216
 		inline constexpr REL::ID UpdateChargenAppearance{ 0 };  // 146273
@@ -46,12 +47,12 @@ namespace RE::ID
 
 	namespace BGSEditorID
 	{
-		inline constexpr REL::ID Register{ 0 };  // 86172
+		inline constexpr REL::ID Register{ 47386 };
 	}
 
 	namespace BGSEntryPoint
 	{
-		inline constexpr REL::ID HandleEntryPoint{ 0 };  // 110912
+		inline constexpr REL::ID HandleEntryPoint{ 67378 };
 	}
 
 	namespace BGSInventoryInterface
@@ -62,7 +63,7 @@ namespace RE::ID
 
 	namespace BGSObjectInstance
 	{
-		inline constexpr REL::ID ctor{ 0 };  // 101725
+		inline constexpr REL::ID ctor{ 59786 };
 	}
 
 	namespace BGSSaveLoadFileEntry
@@ -129,10 +130,10 @@ namespace RE::ID
 
 	namespace BSReadWriteLock
 	{
-		inline constexpr REL::ID lock_read{ 0 };     // 178605
-		inline constexpr REL::ID lock_write{ 0 };    // 34125
-		inline constexpr REL::ID unlock_read{ 0 };   // 178609
-		inline constexpr REL::ID unlock_write{ 0 };  // 34257
+		inline constexpr REL::ID lock_read{ 123862 };
+		inline constexpr REL::ID lock_write{ 123863 };
+		inline constexpr REL::ID unlock_read{ 36021 };
+		inline constexpr REL::ID unlock_write{ 35983 };
 	}
 
 	namespace BSScript
@@ -241,7 +242,7 @@ namespace RE::ID
 
 	namespace BSTEventSource
 	{
-		inline constexpr REL::ID Notify{ 0 };          // 178573
+		inline constexpr REL::ID Notify{ 123824 };
 		inline constexpr REL::ID RegisterSink{ 0 };    // 34452
 		inline constexpr REL::ID UnregisterSink{ 0 };  // 34451
 	}
@@ -298,8 +299,8 @@ namespace RE::ID
 
 	namespace GameSettingCollection
 	{
-		inline constexpr REL::ID Singleton{ 0 };   // 879099
-		inline constexpr REL::ID GetSetting{ 0 };  // 88638
+		inline constexpr REL::ID Singleton{ 938225 };
+		inline constexpr REL::ID GetSetting{ 49324 };
 	}
 
 	namespace GameVM
@@ -339,8 +340,7 @@ namespace RE::ID
 
 	namespace LockPickedEvent
 	{
-		inline constexpr REL::ID GetEventSource{ 0 };  // 107115
-		inline constexpr REL::ID Notify{ 0 };          // 107339
+		inline constexpr REL::ID GetEventSource{ 64229 };
 	}
 
 	namespace Main
@@ -382,7 +382,7 @@ namespace RE::ID
 	{
 		inline constexpr REL::ID DebugNotification{ 0 };        // 138728
 		inline constexpr REL::ID LookupReferenceByHandle{ 0 };  // 72986
-		inline constexpr REL::ID PlayMenuSound{ 0 };            // 167344
+		inline constexpr REL::ID PlayMenuSound{ 139352 };
 	}
 
 	namespace NiCamera
@@ -406,7 +406,7 @@ namespace RE::ID
 
 	namespace PlayerCharacter
 	{
-		inline constexpr REL::ID Singleton{ 0 };  // 865059
+		inline constexpr REL::ID Singleton{ 922868 };
 	}
 
 	namespace ProcessLists
@@ -418,7 +418,7 @@ namespace RE::ID
 
 	namespace REFR_LOCK
 	{
-		inline constexpr REL::ID GetLockLevel{ 0 };  // 84103
+		inline constexpr REL::ID NumericValueToEnum{ 45441 };
 	}
 
 	namespace RegSettingCollection
@@ -491,7 +491,7 @@ namespace RE::ID
 
 	namespace TESActorBaseData
 	{
-		inline constexpr REL::ID GetLevel{ 0 };                // 85868
+		inline constexpr REL::ID GetLevel{ 47237 };
 		inline constexpr REL::ID GetUsesLeveledTemplate{ 0 };  // 85873
 	}
 
@@ -565,13 +565,13 @@ namespace RE::ID
 
 	namespace TESObjectREFR
 	{
-		inline constexpr REL::ID ActivateRef{ 0 };             // 106374
-		inline constexpr REL::ID AddLockChange{ 0 };           // 106386
-		inline constexpr REL::ID GetCalcLevel{ 0 };            // 107531
-		inline constexpr REL::ID GetCurrentLocation{ 0 };      // 106554
-		inline constexpr REL::ID GetDistance{ 0 };             // 106562
-		inline constexpr REL::ID GetLinkedRef{ 0 };            // 107578
-		inline constexpr REL::ID GetLock{ 0 };                 // 107581
+		inline constexpr REL::ID ActivateRef{ 0 };  // 106374
+		inline constexpr REL::ID AddLockChange{ 63454 };
+		inline constexpr REL::ID GetCalcLevel{ 64342 };
+		inline constexpr REL::ID GetCurrentLocation{ 0 };  // 106554
+		inline constexpr REL::ID GetDistance{ 0 };         // 106562
+		inline constexpr REL::ID GetLinkedRef{ 0 };        // 107578
+		inline constexpr REL::ID GetLock{ 64290 };
 		inline constexpr REL::ID GetParentWorldSpace{ 0 };     // 106696
 		inline constexpr REL::ID GetScale{ 0 };                // 106658
 		inline constexpr REL::ID GetSpaceship{ 0 };            // 173851
@@ -579,12 +579,12 @@ namespace RE::ID
 		inline constexpr REL::ID GetSpaceshipPilot{ 0 };       // 173834
 		inline constexpr REL::ID GetValue{ 0 };                // 107605
 		inline constexpr REL::ID HasKeyword{ 0 };              // 80343
-		inline constexpr REL::ID IsCrimeToActivate{ 0 };       // 106755
-		inline constexpr REL::ID IsInSpace{ 0 };               // 106767
-		inline constexpr REL::ID IsObjectEquipped{ 0 };        // 106991
-		inline constexpr REL::ID IsSpaceshipDocked{ 0 };       // 174146
-		inline constexpr REL::ID IsSpaceshipLanded{ 0 };       // 173880
-		inline constexpr REL::ID WornHasKeyword{ 0 };          // 106992
+		inline constexpr REL::ID IsCrimeToActivate{ 63466 };
+		inline constexpr REL::ID IsInSpace{ 0 };          // 106767
+		inline constexpr REL::ID IsObjectEquipped{ 0 };   // 106991
+		inline constexpr REL::ID IsSpaceshipDocked{ 0 };  // 174146
+		inline constexpr REL::ID IsSpaceshipLanded{ 0 };  // 173880
+		inline constexpr REL::ID WornHasKeyword{ 0 };     // 106992
 	}
 
 	namespace TESQuest

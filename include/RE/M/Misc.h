@@ -28,12 +28,12 @@ namespace RE
 		return setting;
 	}
 
-	inline void PlayMenuSound(const char* a_editorID, const char* a_arg3 = nullptr, float a_arg4 = 0.0f)
+	inline void PlayMenuSound(const char* a_editorID, bool a_arg3 = false)
 	{
 		std::uint32_t arg1 = 0;
 
-		using func_t = void(std::uint32_t&, const char*, const char*, float);
+		using func_t = void(std::uint32_t&, const char*, bool);
 		static REL::Relocation<func_t> func{ ID::Misc::PlayMenuSound };
-		return func(arg1, a_editorID, a_arg3, a_arg4);
+		return func(arg1, a_editorID, a_arg3);
 	}
 }

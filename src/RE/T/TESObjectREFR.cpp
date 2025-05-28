@@ -23,6 +23,13 @@ namespace RE
 		}
 	}
 
+	std::uint16_t TESObjectREFR::GetCalcLevel(bool a_allowShift) const
+	{
+		using func_t = decltype(&TESObjectREFR::GetCalcLevel);
+		static REL::Relocation<func_t> func{ ID::TESObjectREFR::GetCalcLevel };
+		return func(this, a_allowShift);
+	}
+
 	BGSLocation* TESObjectREFR::GetCurrentLocation()
 	{
 		using func_t = decltype(&TESObjectREFR::GetCurrentLocation);

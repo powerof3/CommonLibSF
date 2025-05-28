@@ -367,6 +367,7 @@ namespace RE
 		[[nodiscard]] constexpr float                 GetAngleZ() const { return data.angle.z; }
 		[[nodiscard]] NiPointer<TESBoundObject>       GetBaseObject() { return data.objectReference; }
 		[[nodiscard]] NiPointer<const TESBoundObject> GetBaseObject() const { return data.objectReference; }
+		[[nodiscard]] std::uint16_t                   GetCalcLevel(bool a_allowShift) const;
 		[[nodiscard]] BGSLocation*                    GetCurrentLocation();
 		[[nodiscard]] float                           GetDistance(NiPointer<TESObjectREFR> a_other, bool a_disabledRefs = false, bool a_ignoreWorldspace = false) const;
 		[[nodiscard]] TESObjectREFR*                  GetLinkedRef(BGSKeyword* a_keyword);
