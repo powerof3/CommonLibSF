@@ -15,12 +15,7 @@
 
 local PLUGIN_FILE = [[
 #include <SFSE/SFSE.h>
-#include <REL/Relocation.h>
-
-using namespace std::literals;
-
-extern "C" __declspec(dllexport)
-constinit auto SFSEPlugin_Version = []() noexcept {
+SFSE_EXPORT constinit auto SFSEPlugin_Version = []() noexcept {
     SFSE::PluginVersionData v{};
     v.PluginVersion({ ${PLUGIN_VERSION_MAJOR}, ${PLUGIN_VERSION_MINOR}, ${PLUGIN_VERSION_PATCH} });
     v.PluginName("${PLUGIN_NAME}");
