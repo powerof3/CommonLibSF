@@ -395,7 +395,7 @@ namespace RE::ID
 
 	namespace PlayerCamera
 	{
-		inline constexpr REL::ID Singleton{ 0 };         // 878523
+		inline constexpr REL::ID Singleton{ 937788 };
 		inline constexpr REL::ID ForceFirstPerson{ 0 };  // 166029
 		inline constexpr REL::ID ForceThirdPerson{ 0 };  // 166031
 		inline constexpr REL::ID SetCameraState{ 0 };    // 166078
@@ -520,7 +520,7 @@ namespace RE::ID
 
 	namespace TESDataHandler
 	{
-		inline constexpr REL::ID Singleton{ 0 };  // 825890
+		inline constexpr REL::ID Singleton{ 937572 };  // 825890
 	}
 
 	namespace TESDeathEvent
