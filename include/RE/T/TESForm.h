@@ -48,6 +48,7 @@ namespace RE
 			kDeleted = 1 << 5,
 			kPersistent = 1 << 10,
 			kDisabled = 1 << 11,
+			kIgnoreFriendlyHits = 1 << 20,
 		};
 
 		~TESForm() override;  // 00

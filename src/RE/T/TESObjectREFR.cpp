@@ -2,6 +2,7 @@
 
 #include "RE/B/BGSInventoryItem.h"
 #include "RE/E/ExtraLock.h"
+#include "RE/T/TBO_InstanceData.h"
 
 namespace RE
 {
@@ -108,9 +109,8 @@ namespace RE
 
 	bool TESObjectREFR::HasKeyword(BGSKeyword* a_keyword)
 	{
-		using func_t = decltype(&TESObjectREFR::HasKeyword);
-		static REL::Relocation<func_t> func{ ID::TESObjectREFR::HasKeyword };
-		return func(this, a_keyword);
+		BSTSmartPointer<TBO_InstanceData> instanceData{};
+		return HasKeywordImpl(a_keyword, instanceData);
 	}
 
 	bool TESObjectREFR::IsCrimeToActivate()

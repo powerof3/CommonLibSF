@@ -6,10 +6,10 @@ namespace RE::ID
 	{
 		inline constexpr REL::ID EvaluatePackage{ 0 };    // 150640
 		inline constexpr REL::ID GetActorKnowledge{ 0 };  // 150669
-		inline constexpr REL::ID IsHostileToActor{ 0 };   // 150777
-		inline constexpr REL::ID IsJumping{ 0 };          // 150985
-		inline constexpr REL::ID IsOverEncumbered{ 0 };   // 150999
-		inline constexpr REL::ID IsSneaking{ 0 };         // 151014
+		inline constexpr REL::ID IsHostileToActor{ 100890 };
+		inline constexpr REL::ID IsJumping{ 0 };         // 150985
+		inline constexpr REL::ID IsOverEncumbered{ 0 };  // 150999
+		inline constexpr REL::ID IsSneaking{ 0 };        // 151014
 		inline constexpr REL::ID RewardExperience{ 101322 };
 		inline constexpr REL::ID SetSkinTone{ 0 };              // 146270
 		inline constexpr REL::ID UpdateAppearance{ 0 };         // 151216
@@ -23,7 +23,7 @@ namespace RE::ID
 
 	namespace ActorValue
 	{
-		inline constexpr REL::ID GetSingleton{ 0 };  // 36266
+		inline constexpr REL::ID GetSingleton{ 43134 };
 	}
 
 	namespace ActorEquipManager
@@ -243,8 +243,8 @@ namespace RE::ID
 	namespace BSTEventSource
 	{
 		inline constexpr REL::ID Notify{ 123824 };
-		inline constexpr REL::ID RegisterSink{ 0 };    // 34452
-		inline constexpr REL::ID UnregisterSink{ 0 };  // 34451
+		inline constexpr REL::ID RegisterSink{ 123821 };
+		inline constexpr REL::ID UnregisterSink{ 123822 };
 	}
 
 	namespace BSTHeapSTLAllocatorBase
@@ -578,7 +578,6 @@ namespace RE::ID
 		inline constexpr REL::ID GetSpaceshipParentDock{ 0 };  // 174134
 		inline constexpr REL::ID GetSpaceshipPilot{ 0 };       // 173834
 		inline constexpr REL::ID GetValue{ 0 };                // 107605
-		inline constexpr REL::ID HasKeyword{ 0 };              // 80343
 		inline constexpr REL::ID IsCrimeToActivate{ 63466 };
 		inline constexpr REL::ID IsInSpace{ 0 };          // 106767
 		inline constexpr REL::ID IsObjectEquipped{ 0 };   // 106991
@@ -599,7 +598,7 @@ namespace RE::ID
 
 	namespace UI
 	{
-		inline constexpr REL::ID Singleton{ 0 };   // 878339
+		inline constexpr REL::ID Singleton{ 937580 };
 		inline constexpr REL::ID IsMenuOpen{ 0 };  // 1870208
 	}
 
