@@ -572,7 +572,7 @@ namespace RE::ID
 		inline constexpr REL::ID GetLock{ 64290 };
 		inline constexpr REL::ID GetParentWorldSpace{ 0 };     // 106696
 		inline constexpr REL::ID GetScale{ 0 };                // 106658
-		inline constexpr REL::ID GetSpaceship{ 0 };            // 173851
+		inline constexpr REL::ID GetSpaceship{ 119881 };
 		inline constexpr REL::ID GetSpaceshipParentDock{ 0 };  // 174134
 		inline constexpr REL::ID GetSpaceshipPilot{ 0 };       // 173834
 		inline constexpr REL::ID GetValue{ 64271 };
