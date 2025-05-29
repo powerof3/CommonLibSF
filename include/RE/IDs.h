@@ -35,8 +35,7 @@ namespace RE::ID
 
 	namespace BaseExtraList
 	{
-		inline constexpr REL::ID AddExtra{ 0 };   // 83084
-		inline constexpr REL::ID GetByType{ 0 };  // 83208
+		inline constexpr REL::ID AddExtra{ 44736 };
 	}
 
 	namespace BGSDefaultObjectManager
@@ -267,13 +266,12 @@ namespace RE::ID
 
 	namespace ExtraDataList
 	{
-		inline constexpr REL::ID HasQuestObjectAlias{ 0 };  // 83336
-		inline constexpr REL::ID HasType{ 0 };              // 83208
+		inline constexpr REL::ID HasQuestObjectAlias{ 45044 };
 	}
 
 	namespace FORM_ENUM_STRING
 	{
-		inline constexpr REL::ID FormEnumString{ 0 };  // 761416
+		inline constexpr REL::ID FormEnumString{ 809219 };
 	}
 
 	namespace GameMenuBase
@@ -577,9 +575,9 @@ namespace RE::ID
 		inline constexpr REL::ID GetSpaceship{ 0 };            // 173851
 		inline constexpr REL::ID GetSpaceshipParentDock{ 0 };  // 174134
 		inline constexpr REL::ID GetSpaceshipPilot{ 0 };       // 173834
-		inline constexpr REL::ID GetValue{ 0 };                // 107605
+		inline constexpr REL::ID GetValue{ 64271 };
 		inline constexpr REL::ID IsCrimeToActivate{ 63466 };
-		inline constexpr REL::ID IsInSpace{ 0 };          // 106767
+		inline constexpr REL::ID IsInSpace{ 63482 };
 		inline constexpr REL::ID IsObjectEquipped{ 0 };   // 106991
 		inline constexpr REL::ID IsSpaceshipDocked{ 0 };  // 174146
 		inline constexpr REL::ID IsSpaceshipLanded{ 0 };  // 173880

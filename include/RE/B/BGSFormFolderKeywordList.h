@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		SF_RTTI_VTABLE(BGSFormFolderKeywordList);
+		SF_FORMTYPE(FFKW);
 
 		~BGSFormFolderKeywordList() override;  // 00
 

@@ -19,9 +19,24 @@ namespace RE
 
 		[[nodiscard]] BSExtraData* GetByType(ExtraDataType a_type) const noexcept
 		{
-			using func_t = decltype(&BaseExtraList::GetByType);
-			static REL::Relocation<func_t> func{ ID::BaseExtraList::GetByType };
-			return func(this, a_type);
+			if (HasType(a_type)) {
+				for (BSExtraData* iter = _head; iter; iter = iter->next) {
+					if (iter->type == a_type) {
+						return iter;
+					}
+				}
+			}
+
+			return nullptr;
+		}
+
+		[[nodiscard]] bool HasType(ExtraDataType a_type) const noexcept
+		{
+			std::uint32_t type = std::to_underlying(a_type);
+			std::uint32_t flagIdx = type >> 3;
+			std::uint8_t  flagBit = 1 << (type & 7);
+
+			return _flags && (_flags[flagIdx] & flagBit);
 		}
 
 	private:
@@ -72,9 +87,8 @@ namespace RE
 
 		[[nodiscard]] bool HasType(ExtraDataType a_type) const noexcept
 		{
-			using func_t = bool (*)(const ExtraDataList*, ExtraDataType);
-			static REL::Relocation<func_t> func{ ID::ExtraDataList::HasType };
-			return func(this, a_type);
+			const BSAutoReadLock l{ _extraRWLock };
+			return _extraData.HasType(a_type);
 		}
 
 		template <detail::ExtraDataListConstraint T>
