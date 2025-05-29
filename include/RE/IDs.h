@@ -416,7 +416,7 @@ namespace RE::ID
 
 	namespace REFR_LOCK
 	{
-		inline constexpr REL::ID NumericValueToEnum{ 45441 };
+		inline constexpr REL::ID GetLockLevel{ 45439 };
 	}
 
 	namespace RegSettingCollection

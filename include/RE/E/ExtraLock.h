@@ -30,18 +30,30 @@ namespace RE
 			kLeveled = 1 << 2
 		};
 
-		[[nodiscard]] LOCK_LEVEL GetLockLevel(const TESObjectREFR* a_owner) const;
-		constexpr bool           IsLocked() const noexcept { return flags.all(Flag::kLocked); }
-		void                     SetLocked(bool a_locked);
+		[[nodiscard]] LOCK_LEVEL GetLockLevel(const TESObjectREFR* a_owner) const
+		{
+			using func_t = decltype(&REFR_LOCK::GetLockLevel);
+			static REL::Relocation<func_t> func{ ID::REFR_LOCK::GetLockLevel };
+			return func(this, a_owner);
+		}
+
+		constexpr bool IsLocked() const noexcept
+		{
+			return flags.all(Flag::kLocked);
+		}
+
+		void SetLocked(bool a_locked)
+		{
+			flags.set(a_locked, Flag::kLocked);
+			if (!a_locked)
+				numTries = 0;
+		}
 
 		// members
 		TESKey*                          key;        // 00
 		std::uint32_t                    numTries;   // 08
 		REX::EnumSet<Flag, std::uint8_t> flags;      // 0C
 		std::int8_t                      baseLevel;  // 0D
-
-	private:
-		[[nodiscard]] static LOCK_LEVEL NumericValueToEnum(std::int32_t a_value);
 	};
 	static_assert(sizeof(REFR_LOCK) == 0x10);
 
